@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- Mapper主要是用来映射 -->
+<mapper namespace="com.java1234.mappers.StudentMapper">
+	<!-- 这里的Student就是我们在mybatis-config.xml文件中配置的<typeAlias alias="Student" type="com.java1234.model.Student" 
+		/> -->
+	<!-- 如果没有在mybatis.xml文件中没有进行配置的话，在这里就需要协商com.java1234.model.Student -->
+<!--id和parameterType分别与IUserOperation接口中的addUser方法的名字和参数类型一致。-->
+	<insert id="add" parameterType="Student">
+		<!-- name和age是Student中定义的属性 ，也就是说将接口中的add方法映射到执行本条语句 -->
+		insert into student values(null,#{name},#{age})
+	</insert>
+	<update id="update" parameterType="Student">
+		update student set
+		name=#{name},age=#{age} where name=#{name}
+	</update>
+	<delete id="delete" parameterType="Student">
+		delete from
+		student where name=#{name}
+	</delete>
+	<!-- 定义的resultMap，可以解决类的属性名和数据库列名不一致的问题-->
+	<!--由于一个xxxMapper。xml对应一个xxxMapper接口，同时在xxxMapper接口中的每一个方法都对应xxxMapper。xml文件中的一条语句。  -->
+	<!-- 由于在StudentMapper。java文件中的查询方法返回类型是一个Student对象，因此在这里返回类型也是需要设置为Student类型 -->
+	<resultMap type="Student" id="queryStudentResult">
+		<result column="name" property="name"/>
+		<result column="age" property="age"/>
+	</resultMap>
+	
+	<select id="search" parameterType="String" resultMap="queryStudentResult">
+		select name,age from student
+		where name= #{name}
+	</select>
+
+</mapper> 

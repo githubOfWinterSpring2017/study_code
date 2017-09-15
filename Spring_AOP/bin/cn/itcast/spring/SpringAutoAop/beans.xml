@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 定义目标类 -->
+	<bean id="userDao" class="cn.itcast.spring.SpringAutoAop.UserDaoImpl"></bean>
+	<!-- 定义通知 -->
+	<bean id="aroundAdvice" class="cn.itcast.spring.SpringAutoAop.MyUserDaoEnhancer"></bean>
+	<!--BeanNameAutoProxyCreator 按名称生成代理 -->
+	<bean
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<!-- 设置需要增强的Bean，这个Bean会在实例化的过程通过后处理Bean增强变成代理类的实例 -->
+		<property name="beanNames" value="*Dao"></property>
+		<property name="interceptorNames" value="aroundAdvice"></property>
+	</bean>
+
+</beans>

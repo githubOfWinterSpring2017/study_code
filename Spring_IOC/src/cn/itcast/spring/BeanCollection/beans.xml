@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+<!-- 	<context:property-placeholder
+		location="classpath:cn/itcast/spring/BeanCollection/mysql.properties"
+		ignore-unresolvable="true" /> -->
+
+	<bean id="city" class="cn.itcast.spring.BeanCollection.City">
+		<property name="names">
+			<list>
+				<value>张三</value>
+				<value>李四</value>
+			</list>
+		</property>
+		<property name="roads">
+			<set>
+				<value>中山大道</value>
+				<value>灵越大道</value>
+			</set>
+		</property>
+		<property name="cars">
+			<map>
+				<entry key="张三" value="长安铃木" />
+				<entry key="李四" value="北京现代" />
+			</map>
+		</property>
+		<property name="properties">
+			<props>
+				<prop key="mysql.userName">com.mysql.jdbc.Driver</prop>
+				<prop key="mysql.password">boot</prop>
+				<prop key="mysql.driver">java.jdbc.driver</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

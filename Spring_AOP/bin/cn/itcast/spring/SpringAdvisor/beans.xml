@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 目标类 -->
+	<bean id="userDao" class="cn.itcast.spring.SpringAopOne.UserDaoImpl"></bean>
+	<!-- 通知 -->
+	<bean id="enhancer" class="cn.itcast.spring.SpringAopOne.MyUserDaoEnhancer"></bean>
+	<!--生成代理，生成代理需要借助Spring中提供的一个类ProxyFactoryBean来实现 -->
+	<bean id="proxyUserDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target" ref="userDao"></property>
+		<property name="proxyInterfaces" value="cn.itcast.spring.SpringAopOne.UserDao"></property>
+		<property name="interceptorNames" value="enhancer"></property>
+	</bean>
+</beans>

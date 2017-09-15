@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 配置C3P0的连接池 -->
+	<bean id="dataSource"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl" value="jdbc:mysql:///springjdbc" />
+		<property name="user" value="root" />
+		<property name="password" value="root" />
+	</bean>
+
+	<!-- 使用依赖注入的方式来将数据源注入到JDBC模版中 -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<bean id="userDao" class="cn.itcast.spring.SpringJDBCIOCCRUD.UserDao">
+	<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+</beans>

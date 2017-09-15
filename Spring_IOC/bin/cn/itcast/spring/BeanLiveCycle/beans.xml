@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 通过bean配置一个类 -->
+	<!-- <bean id="helloServiceImpl"
+		class="cn.itcast.spring.Demo01.HelloServiceImpl">
+		<property name="info" value="传智播客"></property>
+		</bean> -->
+	<bean id="customerService"
+		class="cn.itcast.spring.BeanLiveCycle.CustomerServiceImpl" init-method="setup" destroy-method="teardown">
+		<property name="name" value="张三"></property>
+	</bean>
+	<!-- 为这个类只需要配置class就可以了，因为这个类是Spring容器自动调用的，不要在程序中手动调用 -->
+	<bean class="cn.itcast.spring.BeanLiveCycle.CustomerBeanPostProcessor"></bean>
+
+
+</beans>

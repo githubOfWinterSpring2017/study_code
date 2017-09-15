@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 引入我们数据库的配置文件 -->
+	<properties resource="jdbc.properties" />
+	<typeAliases>
+		<!-- 为com.java1234.model.Student。java这个类取一个别名 -->
+		<typeAlias alias="Student" type="com.java1234.model.Student" />
+	</typeAliases>
+	<environments default="development">
+		<!-- 在这里配置环境，可以配置多个环境，一般正规的项目都至少有三个环境 ，在这里配置的开发者环境，而且在这里设置默认使用的是开发者环境 -->
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<!-- 在这里分别配置刚才在jdbc。properties文件中的内容 -->
+				<property name="driver" value="${jdbc.driverClassName}" />
+				<property name="url" value="${jdbc.url}" />
+				<property name="username" value="${jdbc.username}" />
+				<property name="password" value="${jdbc.password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	<!-- 映射器 -->
+	<!-- mybatis的mapper文件，每个xml配置文件对应一个接口 -->
+	<mappers>
+		<mapper resource="com/java1234/mappers/StudentMapper.xml" />
+	</mappers>
+</configuration>

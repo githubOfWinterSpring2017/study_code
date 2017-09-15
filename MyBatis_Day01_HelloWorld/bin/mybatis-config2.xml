@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 引入我们数据库的配置文件 -->
+	<!-- <properties resource="jdbc.properties" /> -->
+	<!-- 等价与下面的文件： -->
+
+	<properties><!-- 一般都不会采用这种方式，更多的情况下是使用上面的方式：引用外部配置文件 -->
+		<property name="jdbc.driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="jdbc.url" value="jdbc:mysql://localhost:3306/db_mybatis" />
+		<property name="jdbc.username" value="root" />
+		<property name="jdbc.password" value="root" />
+	</properties>
+
+
+
+	<typeAliases>
+		<!-- 为com.java1234.model.Student。java这个类取一个别名，这个标签是为单个类取别名 -->
+		<!-- <typeAlias alias="Student" type="com.java1234.model.Student" /> -->
+		<!-- 如果需要为很多的类取别名的话，此时就需要使用自动扫描的方式，只不过这些类的别名都是有规则的，例如上面的类取出来的别名就是Student 
+			，这个标签说明扫面指定包下面的类 -->
+		<package name="com.java1234.model" />
+	</typeAliases>
+	<environments default="development">
+		<!-- 在这里配置环境，可以配置多个环境，一般正规的项目都至少有三个环境 ，在这里配置的开发者环境，而且在这里设置默认使用的是开发者环境 -->
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<!-- 在这里分别配置刚才在jdbc。properties文件中的内容 -->
+				<property name="driver" value="${jdbc.driverClassName}" />
+				<property name="url" value="${jdbc.url}" />
+				<property name="username" value="${jdbc.username}" />
+				<property name="password" value="${jdbc.password}" />
+			</dataSource>
+		</environment>
+		<environment id="test">
+			<!-- 事务管理器：MyBatis支持两种类型的事务管理器：JDBC和MANAGED（托管） -->
+			<!-- JDBC:应用程序负责管理数据库连接的生命周期 -->
+			<!-- MANAGED:由引用服务器负责管理数据库连接的生命周期，一般商业服务器才有此功能，如JBOSS。WebLogic -->
+			<transactionManager type="JDBC" />
+			<!-- 配置数据源 -->
+			<!-- UNPOOLED:没有连接池，每次数据库操作，Mybatis都会创建一个新的连接，用完后，关闭，适合小并发项目 -->
+			<!-- POOLED:用上连接池 -->
+			<!-- JNDI:使用应用服务器配置，JNDI数据源获取数据库连接 -->
+			<dataSource type="POOLED">
+				<!-- 在这里分别配置刚才在jdbc。properties文件中的内容 -->
+				<property name="driver" value="${jdbc.driverClassName}" />
+				<property name="url" value="${jdbc.url}" />
+				<property name="username" value="${jdbc.username}" />
+				<property name="password" value="${jdbc.password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	<!-- 引入映射文件 -->
+	<!-- mybatis的mapper文件，每个xml配置文件对应一个接口 -->
+	<mappers>
+		<!-- 1、这是引入xml源文件的方式 -->
+		<!-- <mapper resource="com/java1234/mappers/StudentMapper.xml" /> -->
+		<!-- 2、这是导入接口文件的class文件的方式 -->
+		<!--  <mapper class="com.java1234.mappers.StudentMapper" />-->
+		<!-- 3、上面两种方式都只能一次导入一个配置文件或者一个接口文件，不是很方便，以后一般的情况是导入一个包内的所有配置文件 -->
+		<package name="com.java1234.mappers"/>
+	</mappers>
+</configuration>

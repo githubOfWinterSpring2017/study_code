@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="user" class="cn.itcast.spring.SpringSPEL.User">
+		<property name="name" value="张三"></property>
+		<property name="age" value="100"></property>
+	</bean>
+
+	<bean id="car" class="cn.itcast.spring.SpringSPEL.Car">
+		<!-- 通过构造器注入 -->
+		<constructor-arg name="name" value="丰田"></constructor-arg>
+		<constructor-arg name="price" value="21321.00"></constructor-arg>
+	</bean>
+
+	<bean id="userServiceImpl" class="cn.itcast.spring.SpringSPEL.UserServiceImpl"
+		scope="">
+		<!-- 通过空构造方法初始化UserService 使用SPEL的方式为这个Bean的属性赋值 -->
+		<property name="name" value="#{user.name}"></property>
+		<property name="car" ref="car"></property>
+	</bean>
+</beans>
