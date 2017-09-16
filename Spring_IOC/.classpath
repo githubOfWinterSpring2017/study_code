@@ -8,5 +8,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Web"/>
 	<classpathentry kind="lib" path="E:/常用的Jar包/Spring开发使用的Jar包/解压版/spring-framework-3.2.0.RELEASE/libs/spring-web-3.2.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="E:/常用的Jar包/Spring开发使用的Jar包/解压版/spring-framework-3.2.0.RELEASE/libs/spring-web-3.2.0.RELEASE-sources.jar"/>
+	<classpathentry kind="lib" path="lib/servlet-api.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
