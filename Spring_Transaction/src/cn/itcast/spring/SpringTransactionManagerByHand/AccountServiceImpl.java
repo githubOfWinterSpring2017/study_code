@@ -34,6 +34,7 @@ public class AccountServiceImpl implements AccountService{
 			protected void doInTransactionWithoutResult(TransactionStatus arg0) {
 				accountDao.out(from, money);
 				//如果在这个内部出现了异常，则这个事务不会被提交，也就是说数据库中的数据不会被改变
+				int a = 1/0;
 				accountDao.in(to, money);
 			}
 		});

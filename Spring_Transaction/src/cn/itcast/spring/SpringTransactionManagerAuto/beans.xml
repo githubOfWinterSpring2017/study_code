@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+http://www.springframework.org/schema/context  
+				http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+	<context:property-placeholder
+		location="classpath:cn/itcast/spring/SpringTransactionStart/jdbc.properties" />
+
+	<!-- 配置C3P0的连接池 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driverClass}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="user" value="${jdbc.userName}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+
+	<!-- 持久层类 -->
+	<bean id="accountDao"
+		class="cn.itcast.spring.SpringTransactionManagerAuto.AccountDaoImpl">
+		<!-- 通过注入数据源，在JdbcDaoSupport中就会自动创建一个Jdbc模版了 -->
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<!-- 业务层类 -->
+	<bean id="accountService"
+		class="cn.itcast.spring.SpringTransactionManagerAuto.AccountServiceImpl">
+		<property name="accountDao" ref="accountDao"></property>
+	</bean>
+
+	<!-- 事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<!-- 配置生成代理对象 -->
+	<bean id="accountServiceProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<!-- 设置目标对象 -->
+		<property name="target" ref="accountService"></property>
+		<!-- 注入事务管理器 -->
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="transactionAttributes">
+			<props>
+				<!-- Key就是方法名    传播行为-->
+				<prop key="transfer">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+</beans>
