@@ -10,26 +10,20 @@ import org.springframework.transaction.support.TransactionTemplate;
  *
  */
 public class AccountServiceImpl implements AccountService{
-
 	
 	private AccountDao accountDao;
-	private TransactionTemplate transactionTemplate;
-	
+	private TransactionTemplate transactionTemplate;	
 	public void setAccountDao(AccountDao accountDao) {
 		this.accountDao = accountDao;
 	}
-
 	public void setTransactionTemplate(TransactionTemplate transactionTemplate) {
 		this.transactionTemplate = transactionTemplate;
 	}
-
 	/**
 	 * 转账的具体实现
 	 */
-	public void transfer(final String from, final String to, final Double money) {
-		
-		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-			
+	public void transfer(final String from, final String to, final Double money) {		
+		transactionTemplate.execute(new TransactionCallbackWithoutResult() {			
 			@Override
 			protected void doInTransactionWithoutResult(TransactionStatus arg0) {
 				accountDao.out(from, money);
@@ -37,8 +31,6 @@ public class AccountServiceImpl implements AccountService{
 				int a = 1/0;
 				accountDao.in(to, money);
 			}
-		});
-		
+		});		
 	}
-
 }
